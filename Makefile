@@ -1,48 +1,25 @@
 ##
 ## EPITECH PROJECT, 2021
-## minishell
+## Project Name
 ## File description:
-## Makefile
+## my Makefile
 ##
 
-SRC	=	dante.c
+PLACEA	=	./generator/
 
-OBJ	=	$(SRC:.c=.o)
+PLACEG	=	./solver/
 
-SMAIN	=	main.c
+MY	=	-L lib/
 
-OMAIN	=	$(SMAIN:.c=.o)
+NAME	=	make
 
-NAME	=	dante
-
-CFLAGS	=	-g3
-
-CPPFLAGS	=	-I./include/
-
-#LDFLAGS	= -L ./lib/my/ -lmy
-
-TESTFILES	=
-
-all: $(NAME) unit_tests clean
-
-$(NAME):	$(OBJ) $(OMAIN)
-			gcc -o $(NAME) $(OMAIN) $(OBJ) $(CFLAGS)
+all:	compilea compileg clean
 
 clean:
-	$(RM) $(OBJ) $(OMAIN)
-	find . -name "*~" -delete
-	find . -name \#* -delete
-	find . -name "vgcore*" -delete
+	rm -rf *~
 
-fclean:	clean
-		$(RM) $(NAME)
-		$(RM) unit*
+compilea:
+	$(MAKE) -C $(PLACEA)
 
-re: fclean all
-
-unit_tests: CPPFLAGS += -lcriterion
-unit_tests:
-	echo Testing
-	gcc -o unit_tests $(SRC) $(TESTFILES) $(CPPFLAGS) $(LDFLAGS) --coverage
-	./unit_tests
-	gcovr -r .
+compileg:
+	$(MAKE) -C $(PLACEG)
