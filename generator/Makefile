@@ -13,13 +13,25 @@ MY	=	-L lib/
 
 NAME	=	generator
 
-all:	oui compile clean
+LDFLAGS	=	-I ./include
+
+CFLAGS	=	-g3
+
+all:	dependencies compile clean
+
+make re: fclean all
 
 compile:
-	gcc $(SRC) $(MY) -lmy -o $(NAME)
+	gcc $(SRC) $(MY) -lmy -o $(NAME) $(LDFLAGS)
 
-oui:
+dependencies:
 	$(MAKE) -C $(PLACE)
 
 clean:
 	rm -rf *~
+
+fclean:
+	rm -rf *~
+	rm -rf *.o
+	rm -f generator
+	rm lib/libmy.a
