@@ -11,14 +11,14 @@ PLACE	=	lib/
 
 MY	=	-L lib/
 
-NAME	=	my_ls
+NAME	=	solver
 
-all:	oui compile clean
+all:	dependencies compile clean
 
 compile:
 	gcc $(SRC) $(MY) -lmy -o $(NAME)
 
-oui:
+dependencies:
 	$(MAKE) -C $(PLACE)
 
 clean:

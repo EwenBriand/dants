@@ -11,7 +11,7 @@ PLACE	=	lib/
 
 MY	=	-L lib/
 
-NAME	=	my_ls
+NAME	=	generator
 
 all:	oui compile clean
 
