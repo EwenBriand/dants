@@ -38,8 +38,8 @@ maze_builder_t *set_maze_builder(int x, int y)
 
     if (new == NULL)
         return NULL;
-    new->dim_x = (x + 1) / 2;
-    new->dim_y = (y + 1) / 2;
+    new->dim_x = x / 2;
+    new->dim_y = y / 2;
     new->fill_dim_y = ((x % 2) == 0) ? 1 : 0;
     new->fill_dim_x = ((y % 2) == 0) ? 1 : 0;
     new->curr_x = 0;

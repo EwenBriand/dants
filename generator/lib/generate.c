@@ -102,9 +102,9 @@ void link_lines(maze_builder_t *maze)
 void iterate_eller(maze_builder_t *maze, int last)
 {
     group_rooms(maze);
-    show_first_line(maze);
+ //   show_first_line(maze);
     link_lines(maze);
-        show_links(maze);
+    show_links(maze);
     ++(maze->first_index);
 }
 
