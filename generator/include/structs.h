@@ -13,17 +13,18 @@ struct node_s {
     node_t *next;
     int x;
     int y;
+    int creator_x;
+    int creator_y;
 };
 
 typedef struct maze_builder_s {
     node_t *list;
-    int **array;
-    int array_len;
     int node_count;
     char **maze;
     int height;
     int width;
-    int max_id_written;
+    int tmp_cell_x;
+    int tmp_cell_y;
 } maze_t;
 
 #endif

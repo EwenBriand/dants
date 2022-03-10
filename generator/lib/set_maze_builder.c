@@ -25,20 +25,11 @@ char **set_my_maze(int x, int y)
 node_t *set_chained_list(maze_t *maze)
 {
     node_t *first = new_node(0, 2, new_node(2, 0, NULL));
+    first->creator_x = 0;
+    first->creator_y = 0;
+    first->next->creator_x = 0;
+    first->next->creator_y = 0;
     return first;
-}
-
-void set_array(maze_t *new)
-{
-    new->array[0] = malloc(sizeof(int) * 2);
-    new->array[0][Y] = 0;
-    new->array[0][X] = 2;
-    new->array[1] = malloc(sizeof(int) * 2);
-    new->array[1][Y] = 2;
-    new->array[1][X] = 0;
-    new->array[2] = NULL;
-    new->array[3] = NULL;
-    new->array[4] = NULL;
 }
 
 maze_t *set_maze_builder(int x, int y)
@@ -49,10 +40,9 @@ maze_t *set_maze_builder(int x, int y)
     new->maze = set_my_maze(x, y);
     new->node_count = 2;
     new->list = set_chained_list(new);
-    new->array = malloc(sizeof(int *) * 5);
-    set_array(new);
-    new->array_len = 5;
-    new->max_id_written = 2;
+    // new->array = malloc(sizeof(int *) * 5);
+    // set_array(new);
+    // new->array_len = 5;
     return new;
 }
 

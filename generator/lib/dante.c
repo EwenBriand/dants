@@ -291,11 +291,15 @@ void add_pos_to_list_if_available(maze_t *maze, int x, int y)
         }
     if (maze->maze[y][x] == 'X') {
         list_add(&(maze->list), new_node(x, y, NULL), &(maze->node_count));
+        maze->list->creator_x = maze->tmp_cell_x;
+        maze->list->creator_y = maze->tmp_cell_y;
     }
 }
 
 void add_new_available_pathes_to_list(maze_t *maze, int origin_x, int origin_y)
 {
+    maze->tmp_cell_x = origin_x;
+    maze->tmp_cell_y = origin_y;
     for (int x = -2; x <= 2; x += 4) {
         add_pos_to_list_if_available(maze, origin_x + x, origin_y);
     }
@@ -332,6 +336,14 @@ void write_bridge(maze_t *maze, int x, int y)
     }
 }
 
+void draw_bridge_to_creator(maze_t *maze, node_t *node)
+{
+    int dx = node->creator_x - node->x;
+    int dy = node->creator_y - node->y;
+    maze->maze[node->x + dx / 2][node->y + dy / 2] = '*';
+
+}
+
 void generate_maze(maze_t *maze)
 {
     int i;
@@ -356,7 +368,8 @@ void generate_maze(maze_t *maze)
         // || bridge_to_path->y >= maze->height)
         //     continue;
         // maze->maze[bridge_to_path->y][bridge_to_path->x] = '*';
-        write_bridge(maze, node_tmp->x, node_tmp->y);
+        // write_bridge(maze, node_tmp->x, node_tmp->y);
+        draw_bridge_to_creator(maze, node_tmp);
         add_new_available_pathes_to_list(maze, node_tmp->x, node_tmp->y);
         if (node_tmp != NULL)
             free(node_tmp);

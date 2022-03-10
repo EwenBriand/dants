@@ -9,7 +9,6 @@ SRC	=	display.c \
 		set_maze_builder.c \
 		dante.c \
 		list_utils.c \
-		cell_array.c \
 
 
 OBJ	=	*.o
