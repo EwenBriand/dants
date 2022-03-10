@@ -9,7 +9,7 @@ SRC	=	main.c
 
 PLACE	=	lib/
 
-MY	=	-L lib/
+MY	=	-L ./lib/
 
 NAME	=	generator
 
@@ -22,7 +22,7 @@ all:	dependencies compile clean
 make re: fclean all
 
 compile:
-	gcc $(SRC) $(MY) -lmy -o $(NAME) $(LDFLAGS)
+	gcc $(SRC) $(MY) -lmy $(LDFLAGS) -o $(NAME)
 
 dependencies:
 	$(MAKE) -C $(PLACE)
@@ -34,4 +34,4 @@ fclean:
 	rm -rf *~
 	rm -rf *.o
 	rm -f generator
-	rm lib/libmy.a
+	rm -f lib/libmy.a

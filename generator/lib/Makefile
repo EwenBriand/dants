@@ -5,15 +5,19 @@
 ## Makefile
 ##
 
-SRC	=	group_room.c \
+SRC	=	display.c \
 		set_maze_builder.c \
-		generate.c \
+		dante.c \
+		list_utils.c
+
 
 OBJ	=	*.o
 
 NAME =	libmy.a
 
 CPPFLAGS	=	-I ../include/
+
+TESTFILES	=	tests/test_list.c
 
 all: $(NAME) libmaker clean
 
@@ -24,9 +28,12 @@ libmaker: $(OBJ)
 	ar rc $(NAME) $(OBJ)
 
 clean:
-	rm -f *.o
+	find . -name "*.o" -delete
 	rm -f *~
 
-fclean:
-	clean
+fclean: clean
 	$(RM) $(NAME)
+
+re:
+	fclean
+	$(NAME)

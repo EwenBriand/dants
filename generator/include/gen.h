@@ -11,10 +11,15 @@
     #define CA54378F_16EB_4732_9369_4ACA064B509C
     #define LINK_FACTOR 50
 
-int **init_lines(int y);
-maze_builder_t *set_maze_builder(int x, int y);
-void destroy_maze_builder(maze_builder_t *maze_builder);
-void generate_map(maze_builder_t *maze);
-void group_rooms(maze_builder_t *my_maze);
+node_t *pop(node_t **list);
+node_t *new_node(int x, int y, node_t *next);
+void list_add(node_t **list, node_t *to_add, int *count);
+void free_list(node_t *list);
+int get_node_index_in_list(node_t *list, int x, int y);
+void destroy_maze(maze_t *maze);
+void generate_maze(maze_t *maze);
+void display_maze(maze_t *maze);
+node_t *pop_at(int i, node_t **list, int *count);
+maze_t *set_maze_builder(int x, int y);
 
 #endif
