@@ -17,6 +17,7 @@ struct node_s {
 
 typedef struct maze_builder_s {
     node_t *list;
+    int *array[2];
     int node_count;
     char **maze;
     int height;
