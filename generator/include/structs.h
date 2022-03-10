@@ -23,6 +23,7 @@ typedef struct maze_builder_s {
     char **maze;
     int height;
     int width;
+    int max_id_written;
 } maze_t;
 
 #endif

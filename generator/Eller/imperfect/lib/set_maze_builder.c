@@ -53,6 +53,7 @@ maze_builder_t *set_maze_builder(int x, int y)
     new->array_len = (x * y / 2 + 1);
     new->first_index = 0;
     new->group_id = 0;
+    int max_id_written = 2;
     return new;
 }
 

@@ -52,7 +52,7 @@ maze_t *set_maze_builder(int x, int y)
     new->array = malloc(sizeof(int *) * 5);
     set_array(new);
     new->array_len = 5;
-    printf("maze->array[1] is %p\n", new->array[1]);
+    new->max_id_written = 2;
     return new;
 }
 

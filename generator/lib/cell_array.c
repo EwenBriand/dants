@@ -46,11 +46,16 @@ int *array_pop_at_i(int i, maze_t *maze, int *count)
 
 void add_in_array(maze_t *maze, int x, int y)
 {
+    int j = maze->max_id_written;
+    int compound_index = 0;
+
     for (int i = 0; i < maze->array_len; ++i) {
-        if (maze->array[i] == NULL) {
-            maze->array[i] = malloc(sizeof(int) * 2);
-            maze->array[i][Y] = y;
-            maze->array[i][X] = x;
+        compound_index = (j + i) % maze->array_len;
+        if (maze->array[compound_index] == NULL) {
+            maze->array[compound_index] = malloc(sizeof(int) * 2);
+            maze->array[compound_index][Y] = y;
+            maze->array[compound_index][X] = x;
+            maze->max_id_written = (compound_index > maze->max_id_written) ? compound_index : maze->max_id_written;
             ++(maze->node_count);
             return;
         }
@@ -65,6 +70,7 @@ void add_in_array(maze_t *maze, int x, int y)
     maze->array[maze->array_len / 2 + 1] = malloc(sizeof(int) * 2);
     maze->array[maze->array_len / 2 + 1][Y] = y;
     maze->array[maze->array_len / 2 + 1][X] = x;
+    maze->max_id_written = maze->array_len / 2 + 1;
     ++(maze->node_count);
 }
 
