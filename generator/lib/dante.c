@@ -349,31 +349,24 @@ void generate_maze(maze_t *maze)
     int i;
     node_t *node_tmp = NULL;
     node_t *bridge_to_path = NULL;
+    int min = 1;
 
     while (maze->node_count > 0) {
-        i = rand() % maze->node_count;
+        min = (maze->node_count < 10) ? maze->node_count : 10;
+        i = rand() % min;
         node_tmp = pop_at(i, &maze->list, &(maze->node_count));
-        if (node_tmp == NULL) {
+        if (node_tmp == NULL)
             return;
-        }
         if (node_tmp->x < 0 || node_tmp->x >= maze->width || node_tmp->y < 0
             || node_tmp->y >= maze->height || position_is_used(node_tmp, maze))
             continue;
         maze->maze[node_tmp->y][node_tmp->x] = '*';
-        // display_maze(maze);
-        // bridge_to_path = new_node(node_tmp->x, node_tmp->y, NULL);
-        // choose_way(maze, &(bridge_to_path->x), &(bridge_to_path->y));
-        // if (bridge_to_path->x < 0 || bridge_to_path->x >= maze->width
-        // || bridge_to_path->y < 0
-        // || bridge_to_path->y >= maze->height)
-        //     continue;
-        // maze->maze[bridge_to_path->y][bridge_to_path->x] = '*';
-        // write_bridge(maze, node_tmp->x, node_tmp->y);
         draw_bridge_to_creator(maze, node_tmp);
         add_new_available_pathes_to_list(maze, node_tmp->x, node_tmp->y);
-        if (node_tmp != NULL)
+        if (node_tmp != NULL) {
             free(node_tmp);
-        // if (bridge_to_path != NULL)
-        //     free(bridge_to_path);
+            node_tmp = NULL;
+        }
+
     }
 }
