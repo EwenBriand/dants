@@ -9,6 +9,14 @@
 #include <structs.h>
 #include <unistd.h>
 
+void show_list(node_t *list)
+{
+    if (list != NULL) {
+        printf("---(%d, %d)---%p---\n", list->x, list->y, list);
+        show_list(list->next);
+    }
+}
+
 node_t *pop(node_t **list, int *count)
 {
     node_t *tmp = *list;
@@ -23,8 +31,6 @@ node_t *pop(node_t **list, int *count)
 
 void list_add(node_t **list, node_t *to_add, int *count)
 {
-    if (to_add == NULL)
-        return;
     if (*list == NULL) {
         (*list) = to_add;
         (*list)->next = *list;
@@ -51,8 +57,10 @@ node_t *pop_at(int i, node_t **list, int *count)
 {
     node_t *tmp = NULL;
     node_t *popped = NULL;
-    if (list == NULL || (*list) == NULL || i >= *count || i < 0)
+
+    if (list == NULL || (*list) == NULL || i >= *count || i < 0) {
         return NULL;
+    }
     if (i == 0) {
         popped = (*list);
         (*list) = (*list)->next;

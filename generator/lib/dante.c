@@ -14,7 +14,7 @@
 void change_coo(int *x, int *y, int random, char *res)
 {
     int i = 0;
-    for (i = 0; random > 0; ++i)
+    for (; random > 0; ++i)
         if (res[i] == '1')
             --random;
     --i;
@@ -56,7 +56,8 @@ void choose_way(maze_t *maze, int *x2, int *y2)
         ++i;
     }
     if (count == 0)
-        random = 1;
+        return;
+        // random = 1;
     else
         random = rand() % count;
     if (random == 0)
@@ -68,49 +69,63 @@ void add_pos_to_list_if_available(maze_t *maze, int x, int y)
 {
     if (x < 0 || x >= maze->width || y < 0 || y >= maze->height)
         return;
-    if (x - 1 < 0 || x + 1 >= maze->width || y - 1 < 0
-        || y + 1 >= maze->height)
+    if (x < 0 || x >= maze->width || y < 0
+    || y >= maze->height) {
         return;
-    if (maze->maze[y][x] == 'X' && maze->maze[y - 1][x] == 'X'
-        && maze->maze[y + 1][x] == 'X' && maze->maze[y][x - 1] == 'X'
-        && maze->maze[y][x + 1] == 'X')
+        }
+    if (maze->maze[y][x] == 'X') {
         list_add(&(maze->list), new_node(x, y, NULL), &(maze->node_count));
+    }
 }
 
 void add_new_available_pathes_to_list(maze_t *maze, int origin_x, int origin_y)
 {
-    for (int y = -1; y <= 1; y += 2) {
-        for (int x = -1; x <= 1; x += 2) {
-            add_pos_to_list_if_available(maze, origin_x + x, origin_y + y);
-        }
+    for (int x = -2; x <= 2; x += 4) {
+        add_pos_to_list_if_available(maze, origin_x + x, origin_y);
     }
+    for (int y = -2; y <= 2; y += 4) {
+        add_pos_to_list_if_available(maze, origin_x, origin_y + y);
+    }
+}
+
+int position_is_used(node_t *node, maze_t *maze)
+{
+    if (maze->maze[node->y][node->x] == '*') {
+        node->next = NULL;
+        free_list(node);
+        return 1;
+    }
+    return 0;
 }
 
 void generate_maze(maze_t *maze)
 {
     int i;
     node_t *node_tmp = NULL;
+    node_t *bridge_to_path = NULL;
 
     while (maze->node_count > 0) {
         i = rand() % maze->node_count;
         node_tmp = pop_at(i, &maze->list, &(maze->node_count));
-
         if (node_tmp == NULL) {
-            printf("NOPNOPNOPNOP\n");
             return;
         }
         if (node_tmp->x < 0 || node_tmp->x >= maze->width || node_tmp->y < 0
-            || node_tmp->y >= maze->height)
+            || node_tmp->y >= maze->height || position_is_used(node_tmp, maze))
             continue;
         maze->maze[node_tmp->y][node_tmp->x] = '*';
-        display_maze(maze);
-        choose_way(maze, &(node_tmp->x), &(node_tmp->y));
-        if (node_tmp->x < 0 || node_tmp->x >= maze->width || node_tmp->y < 0
-            || node_tmp->y >= maze->height)
+        // display_maze(maze);
+        bridge_to_path = new_node(node_tmp->x, node_tmp->y, NULL);
+        choose_way(maze, &(bridge_to_path->x), &(bridge_to_path->y));
+        if (bridge_to_path->x < 0 || bridge_to_path->x >= maze->width
+        || bridge_to_path->y < 0
+        || bridge_to_path->y >= maze->height)
             continue;
-        maze->maze[node_tmp->y][node_tmp->x] = '*';
+        maze->maze[bridge_to_path->y][bridge_to_path->x] = '*';
         add_new_available_pathes_to_list(maze, node_tmp->x, node_tmp->y);
         if (node_tmp != NULL)
             free(node_tmp);
+        if (bridge_to_path != NULL)
+            free(bridge_to_path);
     }
 }

@@ -24,8 +24,7 @@ char **set_my_maze(int x, int y)
 
 node_t *set_chained_list(maze_t *maze)
 {
-    node_t *first = new_node(0, 2, NULL);
-    list_add(&first, new_node(2, 0, first), &(maze->node_count));
+    node_t *first = new_node(0, 2, new_node(2, 0, NULL));
     return first;
 }
 
@@ -42,9 +41,10 @@ maze_t *set_maze_builder(int x, int y)
 
 void free_list(node_t *list)
 {
-    while (list->next != NULL) {
+    if (list == NULL)
+        return;
+    if (list->next != NULL) {
         free_list(list->next);
-        list->next = NULL;
     }
     free(list);
 }

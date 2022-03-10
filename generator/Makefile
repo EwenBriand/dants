@@ -13,7 +13,7 @@ MY	=	-L ./lib/
 
 NAME	=	generator
 
-LDFLAGS	=	-I ./include
+CPPFLAGS	=	-I ./include
 
 CFLAGS	=	-g3
 
@@ -22,7 +22,7 @@ all:	dependencies compile clean
 make re: fclean all
 
 compile:
-	gcc $(SRC) $(MY) -lmy $(LDFLAGS) -o $(NAME)
+	gcc $(SRC) $(MY) -lmy $(CPPFLAGS) -o $(NAME)
 
 dependencies:
 	$(MAKE) -C $(PLACE)

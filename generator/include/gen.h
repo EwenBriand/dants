@@ -21,5 +21,6 @@ void generate_maze(maze_t *maze);
 void display_maze(maze_t *maze);
 node_t *pop_at(int i, node_t **list, int *count);
 maze_t *set_maze_builder(int x, int y);
+void show_list(node_t *list);
 
 #endif

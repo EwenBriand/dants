@@ -14,7 +14,7 @@
 void group_rooms(maze_builder_t *maze)
 {
     int curr_first = maze->first_index % 2;
-    srand(time(NULL));
+    // srand(time(NULL));
 
     for (int i = 0; i < maze->dim_x - 1; ++i) {
         if (maze->line[curr_first][i + 1] == maze->line[curr_first][i])
