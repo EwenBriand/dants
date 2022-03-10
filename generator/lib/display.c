@@ -12,10 +12,6 @@
 
 void display_maze(maze_t *maze)
 {
-    printf("in dispaying\n");
-    printf("maze height: %d\n", maze->height);
-    printf("maze->height is ok\n");
-
     for (int i = 0; i < maze->height; ++i) {
         printf("%s\n", maze->maze[i]);
     }

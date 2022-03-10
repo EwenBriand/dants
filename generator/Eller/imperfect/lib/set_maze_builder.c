@@ -49,6 +49,8 @@ maze_builder_t *set_maze_builder(int x, int y)
         free(new);
         return NULL;
     }
+    new->array = malloc(sizeof(int *) * (x * y / 2 + 1));
+    new->array_len = (x * y / 2 + 1);
     new->first_index = 0;
     new->group_id = 0;
     return new;

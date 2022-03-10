@@ -28,6 +28,19 @@ node_t *set_chained_list(maze_t *maze)
     return first;
 }
 
+void set_array(maze_t *new)
+{
+    new->array[0] = malloc(sizeof(int) * 2);
+    new->array[0][Y] = 0;
+    new->array[0][X] = 2;
+    new->array[1] = malloc(sizeof(int) * 2);
+    new->array[1][Y] = 2;
+    new->array[1][X] = 0;
+    new->array[2] = NULL;
+    new->array[3] = NULL;
+    new->array[4] = NULL;
+}
+
 maze_t *set_maze_builder(int x, int y)
 {
     maze_t *new = malloc(sizeof(maze_t));
@@ -36,6 +49,10 @@ maze_t *set_maze_builder(int x, int y)
     new->maze = set_my_maze(x, y);
     new->node_count = 2;
     new->list = set_chained_list(new);
+    new->array = malloc(sizeof(int *) * 5);
+    set_array(new);
+    new->array_len = 5;
+    printf("maze->array[1] is %p\n", new->array[1]);
     return new;
 }
 
