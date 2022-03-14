@@ -19,7 +19,7 @@ void list_add(node_t **list, node_t *to_add, int *count);
 void free_list(node_t *list);
 int get_node_index_in_list(node_t *list, int x, int y);
 void destroy_maze(maze_t *maze);
-void generate_maze(maze_t *maze);
+void generate_maze(maze_t *maze, int perfect);
 void display_maze(maze_t *maze);
 node_t *pop_at(int i, node_t **list, int *count);
 maze_t *set_maze_builder(int x, int y);
