@@ -153,11 +153,13 @@ void ruin_everything(maze_t *maze)
     if (maze->height - 1 <= 0 || maze->width - 1 <= 0)
         return;
     do {
-        passage_nbr /= denum--;
+        passage_nbr = maze->height * maze->width / denum--;
     } while (denum > 0 && passage_nbr == 0);
+    printf("removing %d walls\n", passage_nbr);
     for (int i = 0; i < passage_nbr; ++i) {
         rdm[Y] = rand() % (maze->height - 1);
         rdm[X] = rand() % (maze->width - 1);
+        printf("rdm: %d, %d\n", rdm[Y], rdm[X]);
         if (maze->maze[rdm[Y]][rdm[X]] == 'X') {
             maze->maze[rdm[Y]][rdm[X]] = '*';
             continue;
