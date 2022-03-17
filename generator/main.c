@@ -25,6 +25,10 @@ int main(int argc, char **argv)
         return 84;
     srand(time(NULL));
     generate_maze(my_maze, perfect);
+    if (my_maze->width % 2 == 0 && my_maze->height % 2 == 0)
+        my_maze->maze[my_maze->height - 1][my_maze->width - 2] = '*';
+
+    my_maze->maze[my_maze->height - 1][my_maze->width - 1] = '*';
     display_maze(my_maze);
     destroy_maze(my_maze);
     return 0;
