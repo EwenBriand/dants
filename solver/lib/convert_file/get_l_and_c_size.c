@@ -5,16 +5,17 @@
 ** give the size of the board
 */
 
+#include <string.h>
 #include "my.h"
 
 int get_l_size(char *buffer)
 {
-    char *nb = malloc(sizeof(char) * (my_strlen(buffer)));
+    char *nb = malloc(sizeof(char) * (strlen(buffer)));
 
     for (int i = 0; buffer[i] != '\n'; ++i) {
         nb[i] = buffer[i];
     }
-    return my_str_to_nbr(nb);
+    return atoi(nb);
 }
 
 int get_c_size(char *buffer)

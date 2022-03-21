@@ -5,8 +5,9 @@
 ** main
 */
 
-#include "./include/my.h"
+#include <stdio.h>
 #include "./include/gen.h"
+#include "./include/my.h"
 
 maze_t *build_maze_from_file(char *filepath)
 {
@@ -15,19 +16,28 @@ maze_t *build_maze_from_file(char *filepath)
 
     maze->height = 0;
     maze->width = 0;
-    maze->maze = load_2d_arr_from_file(filepath, &(maze->height),
-    &(maze->width), &error);
+    maze->maze = load_2d_arr_from_file(
+        filepath, &(maze->height), &(maze->width), &error);
     if (maze->maze == NULL) {
         free(maze);
         return NULL;
     }
+    return maze;
 }
 
 int main(int argc, char **argv)
 {
     maze_t *maze = build_maze_from_file(argv[1]);
 
-    if (maze == NULL)
+    if (maze == NULL) {
+        printf("Error");
         return 84;
+    }
+
     solve_maze(maze);
+
+    for (int i = 0; i < maze->height - 1; ++i)
+        printf("%s\n", maze->maze[i]);
+    printf("%s", maze->maze[maze->height - 1]);
+    return 0;
 }

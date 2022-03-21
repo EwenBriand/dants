@@ -79,7 +79,8 @@
 //     }
 // }
 
-// void add_new_available_pathes_to_list(maze_t *maze, int origin_x, int origin_y)
+// void add_new_available_pathes_to_list(maze_t *maze, int origin_x, int
+// origin_y)
 // {
 //     maze->tmp_cell_x = origin_x;
 //     maze->tmp_cell_y = origin_y;
@@ -182,8 +183,8 @@
 //         if (node_tmp == NULL)
 //             return;
 //         if (node_tmp->x < 0 || node_tmp->x >= maze->width || node_tmp->y < 0
-//             || node_tmp->y >= maze->height || position_is_used(node_tmp, maze))
-//             continue;
+//             || node_tmp->y >= maze->height || position_is_used(node_tmp,
+//             maze)) continue;
 //         maze->maze[node_tmp->y][node_tmp->x] = '*';
 //         draw_bridge_to_creator(maze, node_tmp);
 //         add_new_available_pathes_to_list(maze, node_tmp->x, node_tmp->y);
@@ -205,12 +206,15 @@ int **build_parents_from_mother(node_t *mother, int child_x, int child_y)
         parents[i][Y] = mother->parents[i][Y];
         parents[i][X] = mother->parents[i][X];
     }
+    parents[mother->p_len] = malloc(sizeof(int) * 2);
     parents[mother->p_len][Y] = child_y;
+    printf("build_parents_from_mother\n");
     parents[mother->p_len][X] = child_x;
     return parents;
 }
 
-void add_neighboors_to_list(node_t *mother, maze_t *maze, int *out, node_t **list)
+void add_neighboors_to_list(
+    node_t *mother, maze_t *maze, int *out, node_t **list)
 {
     int pos[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
     int tmp_x = 0;
@@ -218,14 +222,21 @@ void add_neighboors_to_list(node_t *mother, maze_t *maze, int *out, node_t **lis
 
     if (mother == NULL)
         return;
+    printf("maze dims are %d %d\n", maze->height, maze->width);
     for (int i = 0; i < 4; ++i) {
         tmp_x = mother->parents[mother->p_len - 1][X] + pos[i][X];
         tmp_y = mother->parents[mother->p_len - 1][Y] + pos[i][Y];
+        printf("tmpy %d tmpx %d\n", tmp_y, tmp_x);
         if (tmp_x < 0 || tmp_x >= maze->width || tmp_y < 0
             || tmp_y >= maze->height)
             continue;
-        if (maze->maze[tmp_y][tmp_x] == '*')
-            list_add(list, new_node(build_parents_from_mother(mother, tmp_x, tmp_y), mother->p_len + 1, NULL, maze));
+        printf("did not continue\n");
+        if (maze->maze[tmp_y][tmp_x] == '*') {
+            list_add(list,
+                new_node(build_parents_from_mother(mother, tmp_x, tmp_y),
+                    mother->p_len + 1, NULL, maze));
+            printf("added a node\n");
+        }
         if (tmp_x == 0 && tmp_y == 0)
             *out = 1;
     }
@@ -248,6 +259,7 @@ void traceback(maze_t *maze, node_t *node)
     if (node == NULL)
         return;
     for (int i = 0; i < node->p_len; ++i) {
+        printf("y :%i\nx :%i\n\n", node->parents[i][Y], node->parents[i][X]);
         maze->maze[node->parents[i][Y]][node->parents[i][X]] = 'o';
     }
     destroy_list(node);
@@ -255,7 +267,7 @@ void traceback(maze_t *maze, node_t *node)
 
 int **init_zero_parents(void)
 {
-    int **zero_parents =  malloc(sizeof(int *));
+    int **zero_parents = malloc(sizeof(int *));
     zero_parents[0] = malloc(sizeof(int) * 2);
     zero_parents[0][0] = 0;
     zero_parents[0][1] = 0;
@@ -272,6 +284,8 @@ int solve_maze(maze_t *maze)
         if (available_nodes == NULL)
             break;
         tmp = pop(&available_nodes);
+        printf("we are at %d %d\n", tmp->parents[tmp->p_len - 1][0],
+            tmp->parents[tmp->p_len - 1][1]);
         add_neighboors_to_list(tmp, maze, &out, &available_nodes);
     }
     if (available_nodes == NULL) {

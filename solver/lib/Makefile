@@ -5,9 +5,10 @@
 ## Makefile
 ##
 
-SRC	=	dante.c \
-		list_utils.c \
-		load_file_in_mem.c \
+SRC	=	dante.c	\
+		list_utils.c	\
+		convert_file/load_file_in_mem.c	\
+		convert_file/get_l_and_c_size.c	\
 
 OBJ	=	*.o
 
