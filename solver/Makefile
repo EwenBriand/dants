@@ -16,7 +16,7 @@ NAME	=	solver
 all:	dependencies compile clean
 
 compile:
-	gcc $(SRC) $(MY) -lmy -o $(NAME)
+	gcc $(SRC) $(MY) -lmy -o $(NAME) -I include/
 
 dependencies:
 	$(MAKE) -C $(PLACE)

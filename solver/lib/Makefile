@@ -5,30 +5,33 @@
 ## Makefile
 ##
 
-SRC	=	*.c
+SRC	=	dante.c \
+		list_utils.c \
+		load_file_in_mem.c \
 
-ALLGCC	=	*.o
+OBJ	=	*.o
 
-NAME	=	libmy.a
+NAME =	libmy.a
 
-MY	=	../../my.h
+CPPFLAGS	=	-I ../include/
 
-DEST	=	../../include/
+TESTFILES	=	tests/test_list.c
 
-all:	obj libmaker right clean
+all: $(NAME) libmaker clean
 
-libmaker:
-	ar rc $(NAME) $(ALLGCC)
+$(NAME):
+	gcc -c $(SRC) $(CPPFLAGS) -g3
 
-obj:
-	gcc -c $(SRC)
-
-right:
-	chmod 777 $(NAME)
+libmaker: $(OBJ)
+	ar rc $(NAME) $(OBJ)
 
 clean:
-	rm -f *.o
+	find . -name "*.o" -delete
 	rm -f *~
 
-copy:
-	cp $(MY) $(DEST)
+fclean: clean
+	$(RM) $(NAME)
+
+re:
+	fclean
+	$(NAME)

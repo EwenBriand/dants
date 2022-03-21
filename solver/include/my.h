@@ -1,21 +1,20 @@
 /*
-** EPITECH PROJECT, 2021
-** libmy.h
+** EPITECH PROJECT, 2022
+** dants
 ** File description:
-** creat the header of the libmy.a
+** my
 */
 
+#include <fcntl.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 #include <unistd.h>
 
-#ifndef _LIBALL_POOL
-    #define _LIBALL_POOL
+#ifndef D07DA196_02D1_4834_975F_0BB14A91A233
+#define D07DA196_02D1_4834_975F_0BB14A91A233
 
-int my_strlen_int(int nb);
-int my_strlen(char const *str);
-char *my_strcat(char *dest, char const *src);
-char *my_revstr(char *str);
-int my_putstr(char const *str);
-void my_putnbr(int nb);
-void my_putchar(char c);
+char ** load_2d_arr_from_file(char const *filepath,
+int *nb_rows, int *nb_cols, int *error);
 
 #endif
