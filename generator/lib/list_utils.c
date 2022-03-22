@@ -12,10 +12,8 @@
 
 void show_list(node_t *list)
 {
-    if (list != NULL) {
-        printf("---(%d, %d)---%p---\n", list->x, list->y, list);
+    if (list != NULL)
         show_list(list->next);
-    }
 }
 
 node_t *pop(node_t **list, int *count)

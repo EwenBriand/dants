@@ -74,6 +74,7 @@ void get_lines_and_rows(char *buffer, int *rows, int *cols, int *error)
         if (*error)
             break;
     }
+    ++*rows;
 }
 
 char **load_2d_arr_from_file(
@@ -100,5 +101,6 @@ char **load_2d_arr_from_file(
             pos_x = 0;
         }
     }
+    free(buffer);
     return board;
 }
