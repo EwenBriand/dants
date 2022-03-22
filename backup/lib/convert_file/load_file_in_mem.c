@@ -5,7 +5,6 @@
 ** step 1 task 4
 */
 
-#include <stdio.h>
 #include "my.h"
 
 char *load_file_in_mem(char const *filepath)
@@ -19,9 +18,9 @@ char *load_file_in_mem(char const *filepath)
     if (fd != -1) {
         read(fd, buffer, buf.st_size);
     }
-    buffer[buf.st_size] = '\0';
     return buffer;
 }
+
 
 int find_j(char *buffer)
 {
@@ -37,7 +36,7 @@ int find_j(char *buffer)
     }
 }
 
-char **mem_alloc_2d_array(int nb_rows, int nb_cols)
+char ** mem_alloc_2d_array(int nb_rows , int nb_cols)
 {
     char **tab = malloc(sizeof(char *) * (nb_rows + 1));
 
@@ -54,45 +53,15 @@ char **mem_alloc_2d_array(int nb_rows, int nb_cols)
     return tab;
 }
 
-void get_lines_and_rows(char *buffer, int *rows, int *cols, int *error)
-{
-    int curr_line_len = 0;
-    int hello = -1;
-
-    for (int i = 0; buffer[i] != '\0'; ++i) {
-        ++curr_line_len;
-        if (hello == -1 && buffer[i] == '\n') {
-            *cols = i;
-            ++*rows;
-            curr_line_len = 0;
-            ++hello;
-        } else if (buffer[i] == '\n') {
-            ++*rows;
-            *error = (curr_line_len - 1 == *cols) ? 0 : 1;
-            curr_line_len = 0;
-        }
-        if (*error)
-            break;
-    }
-}
-
-char **load_2d_arr_from_file(
-    char const *filepath, int *nb_rows, int *nb_cols, int *error)
+char ** load_2d_arr_from_file(char const *filepath , int nb_rows , int nb_cols)
 {
     char *buffer = load_file_in_mem(filepath);
+    char **board = mem_alloc_2d_array(nb_rows, nb_cols);
     int pos_x = 0;
     int pos_y = 0;
     int j = find_j(buffer);
-    char **board;
 
-    get_lines_and_rows(buffer, nb_rows, nb_cols, error);
-
-    if (*error) {
-        free(buffer);
-        return NULL;
-    }
-    board = mem_alloc_2d_array(*nb_rows, *nb_cols);
-    for (; buffer[j] != '\0' && pos_y != *nb_rows; ++j) {
+    for (; buffer[j] != '\0' && pos_y != nb_rows; ++j) {
         board[pos_y][pos_x] = buffer[j];
         ++pos_x;
         if (buffer[j] == '\n') {

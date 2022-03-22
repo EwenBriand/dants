@@ -29,62 +29,28 @@ node_t *pop(node_t **list)
     return tmp;
 }
 
-// void list_add(node_t **list, node_t *to_add)
-// {
-//     int pos = 0;
-//     if (*list == NULL) {
-//         (*list) = to_add;
-//         (*list)->next = *list;
-//         return;
-//     }
-//     if (list->next->distance > to_add->distance)
-//         add_to_add(node_t **list, node_t *to_add);
-//     list[pos] = to_add; ...
-//     to_add->next = *list;
-//     *list = to_add;
-// }
-
-int args_are_null(node_t **list, node_t *to_add)
-{
-    if (to_add == NULL)
-        return 1;
-    if (list == NULL)
-        return 1;
-    if (*list == NULL) {
-        *list = to_add;
-        return 1;
-    }
-    return 0;
-}
-
 void list_add(node_t **list, node_t *to_add)
 {
-    if (args_are_null(list, to_add))
-        return;
-    if ((*list)->distance > to_add->distance) {
-        to_add->next = *list;
-        *list = to_add;
-        return;
-    }
-    if ((*list)->next == NULL) {
-        (*list)->next = to_add;
+    int pos = 0;
+    if (*list == NULL) {
+        (*list) = to_add;
+        (*list)->next = *list;
         return;
     }
-    if ((*list)->next->distance > to_add->distance) {
-        to_add->next = (*list)->next;
-        (*list)->next = to_add;
-        return;
-    }
-    list_add(&((*list)->next), to_add);
+    if (list->next->distance > to_add->distance)
+        add_to_add(node_t **list, node_t *to_add);
+    list[pos] = to_add; ...
+    to_add->next = *list;
+    *list = to_add;
 }
 
 int get_manhattan_distance(maze_t *maze, int **parents, int p_len)
 {
-    return maze->height - parents[p_len - 1][0] + maze->width
-        - parents[p_len - 1][1];
+    return maze->height - parents[p_len - 1][0]
+    + maze->width - parents[p_len - 1][1];
 }
 
-node_t *new_node(int **parents, int p_len, node_t *next, maze_t *maze)
+node_t *new_node(int *parents, int p_len, node_t *next, maze_t *maze)
 {
     node_t *new = malloc(sizeof(node_t));
 
@@ -93,9 +59,6 @@ node_t *new_node(int **parents, int p_len, node_t *next, maze_t *maze)
     new->next = next;
     new->parents = parents;
     new->distance = get_manhattan_distance(maze, parents, p_len);
-    new->p_len = p_len;
-    new->y = new->parents[p_len - 1][0];
-    new->x = new->parents[p_len - 1][1];
     return new;
 }
 
@@ -104,7 +67,7 @@ node_t *pop_at(int i, node_t **list)
     node_t *tmp = NULL;
     node_t *popped = NULL;
 
-    if (list == NULL || (*list) == NULL || i < 0) {
+    if (list == NULL || (*list) == NULL || i >= *count || i < 0) {
         return NULL;
     }
     if (i == 0) {

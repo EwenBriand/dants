@@ -208,7 +208,6 @@ int **build_parents_from_mother(node_t *mother, int child_x, int child_y)
     }
     parents[mother->p_len] = malloc(sizeof(int) * 2);
     parents[mother->p_len][Y] = child_y;
-    printf("build_parents_from_mother\n");
     parents[mother->p_len][X] = child_x;
     return parents;
 }
@@ -222,22 +221,18 @@ void add_neighboors_to_list(
 
     if (mother == NULL)
         return;
-    printf("maze dims are %d %d\n", maze->height, maze->width);
     for (int i = 0; i < 4; ++i) {
         tmp_x = mother->parents[mother->p_len - 1][X] + pos[i][X];
         tmp_y = mother->parents[mother->p_len - 1][Y] + pos[i][Y];
-        printf("tmpy %d tmpx %d\n", tmp_y, tmp_x);
         if (tmp_x < 0 || tmp_x >= maze->width || tmp_y < 0
             || tmp_y >= maze->height)
             continue;
-        printf("did not continue\n");
         if (maze->maze[tmp_y][tmp_x] == '*') {
             list_add(list,
                 new_node(build_parents_from_mother(mother, tmp_x, tmp_y),
                     mother->p_len + 1, NULL, maze));
-            printf("added a node\n");
         }
-        if (tmp_x == 0 && tmp_y == 0)
+        if (tmp_x == maze->height - 1 && tmp_y == maze->width - 1)
             *out = 1;
     }
 }
@@ -258,34 +253,40 @@ void traceback(maze_t *maze, node_t *node)
 {
     if (node == NULL)
         return;
+    for (int i = 0; i < maze->height; ++i) {
+        for (int j = 0; j < maze->width; ++j) {
+            if (maze->maze[i][j] == 't')
+                maze->maze[i][j] = '*';
+        }
+    }
     for (int i = 0; i < node->p_len; ++i) {
-        printf("y :%i\nx :%i\n\n", node->parents[i][Y], node->parents[i][X]);
+        // printf("y :%i\nx :%i\n\n", node->parents[i][Y], node->parents[i][X]);
         maze->maze[node->parents[i][Y]][node->parents[i][X]] = 'o';
     }
     destroy_list(node);
 }
 
-int **init_zero_parents(void)
+int **init_zero_parents(maze_t *maze)
 {
     int **zero_parents = malloc(sizeof(int *));
     zero_parents[0] = malloc(sizeof(int) * 2);
     zero_parents[0][0] = 0;
     zero_parents[0][1] = 0;
+    maze->maze[0][0] = 't';
     return zero_parents;
 }
 
 int solve_maze(maze_t *maze)
 {
-    node_t *available_nodes = new_node(init_zero_parents(), 1, NULL, maze);
+    node_t *available_nodes = new_node(init_zero_parents(maze), 1, NULL, maze);
     node_t *tmp = NULL;
     int out = 0;
 
     while (!out) {
-        if (available_nodes == NULL)
+        if (available_nodes == NULL) {
             break;
+        }
         tmp = pop(&available_nodes);
-        printf("we are at %d %d\n", tmp->parents[tmp->p_len - 1][0],
-            tmp->parents[tmp->p_len - 1][1]);
         add_neighboors_to_list(tmp, maze, &out, &available_nodes);
     }
     if (available_nodes == NULL) {
