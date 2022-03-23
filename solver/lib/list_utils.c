@@ -29,21 +29,6 @@ node_t *pop(node_t **list)
     return tmp;
 }
 
-// void list_add(node_t **list, node_t *to_add)
-// {
-//     int pos = 0;
-//     if (*list == NULL) {
-//         (*list) = to_add;
-//         (*list)->next = *list;
-//         return;
-//     }
-//     if (list->next->distance > to_add->distance)
-//         add_to_add(node_t **list, node_t *to_add);
-//     list[pos] = to_add; ...
-//     to_add->next = *list;
-//     *list = to_add;
-// }
-
 int args_are_null(node_t **list, node_t *to_add)
 {
     if (to_add == NULL)
@@ -121,17 +106,3 @@ node_t *pop_at(int i, node_t **list)
     }
     return pop_at(i - 1, &((*list)->next));
 }
-
-// int get_node_index_in_list(node_t *list, parents)
-// {
-//     int return_val = 0;
-
-//     if (list == NULL)
-//         return 0;
-//     if (list->parents == parents)
-//         return 1;
-//     return_val = get_node_index_in_list(list->next, x, y);
-//     if (return_val == 0)
-//         return 0;
-//     return 1 + return_val;
-// }

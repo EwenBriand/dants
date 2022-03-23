@@ -10,12 +10,6 @@
 #include <structs.h>
 #include <unistd.h>
 
-// void show_list(node_t *list)
-// {
-//     if (list != NULL)
-//         show_list(list->next);
-// }
-
 node_t *pop(node_t **list, int *count)
 {
     node_t *tmp = *list;

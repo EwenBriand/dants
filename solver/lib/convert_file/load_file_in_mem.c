@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include "my.h"
 
+int find_j(char *buffer);
+
 char *load_file_in_mem(char const *filepath)
 {
     char *buffer;
@@ -21,20 +23,6 @@ char *load_file_in_mem(char const *filepath)
     }
     buffer[buf.st_size] = '\0';
     return buffer;
-}
-
-int find_j(char *buffer)
-{
-    int j = 0;
-
-    if (buffer[0] == '*' || buffer[0] == 'X') {
-        return j;
-    } else {
-        while (buffer[j] != '\n') {
-            ++j;
-        }
-        return j + 1;
-    }
 }
 
 char **mem_alloc_2d_array(int nb_rows, int nb_cols)
@@ -77,6 +65,12 @@ void get_lines_and_rows(char *buffer, int *rows, int *cols, int *error)
     ++*rows;
 }
 
+void *free_buffer(char *buffer)
+{
+    free(buffer);
+    return NULL;
+}
+
 char **load_2d_arr_from_file(
     char const *filepath, int *nb_rows, int *nb_cols, int *error)
 {
@@ -87,15 +81,11 @@ char **load_2d_arr_from_file(
     char **board;
 
     get_lines_and_rows(buffer, nb_rows, nb_cols, error);
-
-    if (*error) {
-        free(buffer);
-        return NULL;
-    }
+    if (*error)
+        return free_buffer(buffer);
     board = mem_alloc_2d_array(*nb_rows, *nb_cols);
     for (; buffer[j] != '\0' && pos_y != *nb_rows; ++j) {
-        board[pos_y][pos_x] = buffer[j];
-        ++pos_x;
+        board[pos_y][pos_x++] = buffer[j];
         if (buffer[j] == '\n') {
             ++pos_y;
             pos_x = 0;

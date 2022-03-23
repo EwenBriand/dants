@@ -25,6 +25,18 @@ maze_t *build_maze_from_file(char *filepath)
     return maze;
 }
 
+void print_and_free_maze(maze_t *maze)
+{
+    for (int i = 0; i < maze->height - 1; ++i) {
+        printf("%s", maze->maze[i]);
+        free(maze->maze[i]);
+    }
+    printf("%s", maze->maze[maze->height - 1]);
+    free(maze->maze[maze->height - 1]);
+    free(maze->maze);
+    free(maze);
+}
+
 int main(int argc, char **argv)
 {
     maze_t *maze = build_maze_from_file(argv[1]);
@@ -43,14 +55,6 @@ int main(int argc, char **argv)
         free(maze);
         return 0;
     }
-
-    for (int i = 0; i < maze->height - 1; ++i) {
-        printf("%s", maze->maze[i]);
-        free(maze->maze[i]);
-    }
-    printf("%s", maze->maze[maze->height - 1]);
-    free(maze->maze[maze->height - 1]);
-    free(maze->maze);
-    free(maze);
+    print_and_free_maze(maze);
     return 0;
 }
