@@ -40,9 +40,6 @@ maze_t *set_maze_builder(int x, int y)
     new->maze = set_my_maze(x, y);
     new->node_count = 2;
     new->list = set_chained_list(new);
-    // new->array = malloc(sizeof(int *) * 5);
-    // set_array(new);
-    // new->array_len = 5;
     return new;
 }
 
