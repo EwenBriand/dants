@@ -17,7 +17,6 @@ node_t *new_node(int **parents, int p_len, node_t *next, maze_t *maze);
 node_t *pop(node_t **list);
 void list_add(node_t **list, node_t *to_add);
 void free_list(node_t *list);
-// int get_node_index_in_list(node_t *list, int x, int y);
 void destroy_maze(maze_t *maze);
 void generate_maze(maze_t *maze, int perfect);
 void display_maze(maze_t *maze);
