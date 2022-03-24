@@ -23,7 +23,6 @@ make re: fclean all
 
 compile:
 	gcc $(SRC) $(MY) -lmy $(CPPFLAGS) -o $(NAME)
-
 dependencies:
 	$(MAKE) -C $(PLACE)
 
@@ -33,5 +32,5 @@ clean:
 fclean:
 	rm -rf *~
 	rm -rf *.o
-	rm -f generator
+	rm -f $(NAME)
 	rm -f lib/libmy.a

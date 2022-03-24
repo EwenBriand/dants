@@ -30,8 +30,10 @@ void add_new_available_pathes_to_array(maze_t *maze, int x, int y);
 void add_pos_to_array_if_available(maze_t *maze, int x, int y);
 int solve_maze(maze_t *maze);
 int get_manhattan_distance(maze_t *maze, int **parents, int p_len);
-
+void destroy_list(node_t *list);
 void add_neighboors_to_list(
     node_t *mother, maze_t *maze, int *out, node_t **list);
+int get_manhattan_distance(maze_t *maze, int **parents, int p_len);
+int args_are_null(node_t **list, node_t *to_add);
 
 #endif

@@ -11,10 +11,6 @@
 #include "gen.h"
 #include "structs.h"
 
-void destroy_list(node_t *list);
-void add_neighboors_to_list(
-    node_t *mother, maze_t *maze, int *out, node_t **list);
-
 void traceback(maze_t *maze, node_t *node)
 {
     if (node == NULL)
