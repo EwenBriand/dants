@@ -11,6 +11,7 @@ SRC	=	dante.c	\
 		convert_file/get_l_and_c_size.c	\
 		convert_file/find_j.c	\
 		add_neighboors_to_list.c	\
+		node_utils.c
 
 OBJ	=	*.o
 
