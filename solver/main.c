@@ -41,11 +41,8 @@ int main(int argc, char **argv)
 {
     maze_t *maze = build_maze_from_file(argv[1]);
     if (maze == NULL) {
-        printf("Error");
         return 84;
     }
-    printf("%i %i\n", maze->height, maze->width);
-
     if (solve_maze(maze)) {
         for (int i = 0; i < maze->height - 1; ++i) {
             free(maze->maze[i]);
